@@ -18,8 +18,12 @@ SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 CREDS_PATH = '.config/private-credentials.json'
 CREDS = join(getenv("HOME"), CREDS_PATH)
 
-ME='jcasey@redhat.com'
+ME=getenv("EMAIL")
 PAGE_SZ=50
+
+if ME is None:
+   print("Missing environment variable $EMAIL, which should be the main participant in calendar entries we're looking for.")
+   exit(1)
 
 if not exists(CREDS):
   print(f"Missing credentials: $HOME/{CREDS_PATH}")
