@@ -1,0 +1,9 @@
+*.csv
+*.ods
+token.json
+build
+public
+venv
+.venv
+*.code-workspace
+.idea
