@@ -15,8 +15,13 @@ from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
-CREDS_PATH = '.config/private-credentials.json'
-CREDS = join(getenv("HOME"), CREDS_PATH)
+
+CREDS=getenv('GOOGLE_CREDS_PATH')
+TOKEN_PATH = CREDS + ".token.json"
+
+# CREDS_PATH = '.config/private-credentials.json'
+# TOKEN_PATH = 'token.json'
+# CREDS = join(getenv("HOME"), CREDS_PATH)
 
 ME=getenv("EMAIL")
 PAGE_SZ=50
@@ -26,7 +31,7 @@ if ME is None:
    exit(1)
 
 if not exists(CREDS):
-  print(f"Missing credentials: $HOME/{CREDS_PATH}")
+  print(f"Missing credentials: {CREDS}")
   exit(1)
 
 
@@ -38,19 +43,24 @@ def main():
   # The file token.json stores the user's access and refresh tokens, and is
   # created automatically when the authorization flow completes for the first
   # time.
-  if exists("token.json"):
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+  if exists(TOKEN_PATH):
+    print(f"Loading credentials: {TOKEN_PATH}")
+    creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
+
   # If there are no (valid) credentials available, let the user log in.
   if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
+      print("Refreshing token")
       creds.refresh(Request())
     else:
+      print(f"Loading installed App Flow: {CREDS}")
       flow = InstalledAppFlow.from_client_secrets_file(
           CREDS, SCOPES
       )
       creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
-    with open("token.json", "w") as token:
+    with open(TOKEN_PATH, "w") as token:
+      print(f"Writing: {TOKEN_PATH}")
       token.write(creds.to_json())
 
   try:

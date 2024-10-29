@@ -398,6 +398,20 @@ files = [
 ]
 
 [[package]]
+name = "pdpyras"
+version = "5.3.0"
+description = "PagerDuty Python REST API Sessions"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "pdpyras-5.3.0.tar.gz", hash = "sha256:0c5b514bea764bdd9e43685d9ede06afa2f504fa0c6799f1670d38ad3233fc6e"},
+]
+
+[package.dependencies]
+requests = "*"
+urllib3 = "*"
+
+[[package]]
 name = "platformdirs"
 version = "4.3.6"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
@@ -598,4 +612,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "5f47cce7616234f33affd9dc39afad2bebc2fe015edd0419266bdc3f45d7b3c9"
+content-hash = "7fe6af88f8749c10d237fcfc76d361b2ceee0f5ed07ef0e94aec4d8d5aa6516f"
