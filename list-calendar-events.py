@@ -25,6 +25,7 @@ TOKEN_PATH = CREDS + ".token.json"
 
 ME=getenv("EMAIL")
 PAGE_SZ=50
+MONTHS=3
 
 if ME is None:
    print("Missing environment variable $EMAIL, which should be the main participant in calendar entries we're looking for.")
@@ -70,7 +71,18 @@ def main():
     now = datetime.datetime.now(tz=datetime.timezone.utc)
     dayrange = calendar.monthrange(now.year, now.month)
 
-    start = now.replace(day=1, hour=0, minute=0, second=0)
+    startyear = now.year
+    startmonth = now.month
+
+    monthoffset = MONTHS-1
+    if monthoffset > 0:
+      if startmonth <= monthoffset:
+        startmonth = 12-(monthoffset-1)
+        startyear -= 1
+      else:
+        startmonth = now.month - (monthoffset)
+      
+    start = now.replace(year=startyear, month=startmonth, day=1, hour=0, minute=0, second=0)
     end = now.replace(day=dayrange[1], hour=23, minute=59, second=59)
 
     timeMin = start.isoformat()
