@@ -1,3 +1,6 @@
+*.pyc
+OUT
+notes.txt
 *.csv
 *.ods
 token.json
