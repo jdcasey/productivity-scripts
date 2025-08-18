@@ -1,0 +1,15 @@
+First, read about_me.md to understand my profile and role in the company, and undestand the scope of my work.
+
+Then, review the Gemini meeting notes downloaded from my recent Google calendar, which have been condensed into a notes.txt file by repomix.
+The note files in the repomix output were organized primarily between meetings I accepted, rejected, or didn't acknowledge; and organized secondarily in chronological order.
+
+Given this information, provide the following:
+
+
+    Summary of discussion themes, ordered by intensity and durability of the discussion over time. Add significant weight to things that happened in meetings that I DIDN'T accept.
+
+    List of deadlines and confidence rating of their reliability, based on how commonly they were discussed.
+
+    An assessment discussion tones, and a list of technical projects we might consider in order to address pervasive themes that have a negative tone.
+
+    Tell me which discussions I completely missed or that had significant discussion I missed.
