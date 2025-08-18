@@ -17,6 +17,8 @@ class Config:
         "https://www.googleapis.com/auth/calendar.readonly",
         "https://www.googleapis.com/auth/drive.readonly"
     ])
+    gemini_api_key: str = None
+    gemini_model: str = "gemini-1.5-pro"
     
     def __post_init__(self):
         """Initialize configuration from environment variables."""
@@ -24,6 +26,8 @@ class Config:
             self.credentials_path = os.getenv('GOOGLE_CREDS_PATH')
         if self.email is None:
             self.email = os.getenv('EMAIL')
+        if self.gemini_api_key is None:
+            self.gemini_api_key = os.getenv('GEMINI_API_KEY')
     
     @property
     def token_path(self) -> str:
@@ -41,4 +45,13 @@ class Config:
         
         if not exists(self.credentials_path):
             print(f"Missing credentials: {self.credentials_path}")
+            exit(1)
+    
+    def validate_gemini(self) -> None:
+        """Validate Gemini-specific configuration."""
+        if self.gemini_api_key is None:
+            print("""
+            Missing environment variable $GEMINI_API_KEY, which is required for theme analysis.
+            Get your API key from: https://aistudio.google.com/
+            """)
             exit(1)

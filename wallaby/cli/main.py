@@ -8,6 +8,7 @@ from typing import List, Optional
 from .list_calendars import main as list_calendars_main
 from .list_events import main as list_events_main
 from .download_notes import main as download_notes_main
+from .analyze_themes import main as analyze_themes_main
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -66,6 +67,33 @@ def create_parser() -> argparse.ArgumentParser:
         help="Output directory for event files (default: calendar_events)"
     )
     
+    # Analyze themes sub-command
+    analyze_themes_parser = subparsers.add_parser(
+        "analyze-themes",
+        help="Analyze themes from downloaded meeting notes using Gemini LLM",
+        description="Interactive analysis of meeting notes with theme extraction and Q&A capabilities"
+    )
+    analyze_themes_parser.add_argument(
+        "profile_path",
+        help="Path to your profile/context file (e.g., about_me.md)"
+    )
+    analyze_themes_parser.add_argument(
+        "--notes-dir",
+        default="OUT",
+        help="Directory containing downloaded notes (default: OUT)"
+    )
+    analyze_themes_parser.add_argument(
+        "--output-dir",
+        default="analysis",
+        help="Directory to save analysis outputs (default: analysis)"
+    )
+    analyze_themes_parser.add_argument(
+        "--days",
+        type=int,
+        default=30,
+        help="Number of days back to include notes (default: 30)"
+    )
+    
     return parser
 
 
@@ -98,6 +126,13 @@ def main(args: Optional[List[str]] = None) -> int:
             download_notes_main(
                 days=parsed_args.days,
                 output_dir=parsed_args.output_dir
+            )
+        elif parsed_args.command == "analyze-themes":
+            analyze_themes_main(
+                profile_path=parsed_args.profile_path,
+                notes_dir=parsed_args.notes_dir,
+                output_dir=parsed_args.output_dir,
+                days=parsed_args.days
             )
         else:
             print(f"Unknown command: {parsed_args.command}", file=sys.stderr)
